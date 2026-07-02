@@ -1,3 +1,4 @@
+"use strict"
 const container = document.querySelector(".container");
 const containerSize = 500;
 const gridAdjustor = document.querySelector("#openPrompt");
