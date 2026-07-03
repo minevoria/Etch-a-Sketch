@@ -30,3 +30,18 @@ jsbuttonContainer.addEventListener("click", (e) => {
     }
 });
 ```
+BUG:
+Also note that eventListeners are piling up.Every time initiateGrids() is called, past me were adding new event listeners on the buttons inside the function — they stack up. So if the user resets 5 times, clicking rainbow fires 5 listeners. The button listeners for rainbow/normal/opaque should live outside initiateGrids(), referencing the grids dynamically instead.
+Also the resetBtn listener inside gridAdjustor does the same thing — nested listener that stacks on each click.
+
+FIX; Use .removeEventListener method before adding them! or just move them inside InitiateGrids()
+```
+const grids = document.querySelectorAll(".container div");
+
+rainbowBtn.addEventListener("click", () => rainbowGrids(grids));
+normalBtn.addEventListener("click", () => normalGrids(grids));
+```
+```
+rainbowBtn.removeEventListener("click", rainbowHandler);
+rainbowBtn.addEventListener("click", rainbowHandler);
+```
